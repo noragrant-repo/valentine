@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Valentine 💖</title>
+
+<style>
+
+body{
+    text-align:center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    margin-top:80px;
+    overflow:hidden;
+}
+
+h1{
+    color:white;
+    font-size:40px;
+}
+
+button{
+    padding:15px 30px;
+    font-size:20px;
+    margin:20px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+#yesBtn{
+    background:red;
+    color:white;
+}
+
+#noBtn{
+    background:white;
+}
+
+#message{
+    font-size:24px;
+    color:white;
+    margin-top:20px;
+}
+
+/* Photo slideshow */
+#photos{
+    display:none;
+    margin-top:20px;
+}
+
+#photos img{
+    width:260px;
+    border-radius:15px;
+    box-shadow:0px 0px 15px rgba(0,0,0,0.3);
+}
+
+/* Floating hearts */
+.heart{
+    position:absolute;
+    color:red;
+    font-size:20px;
+    animation: float 5s linear infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-800px);}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Aduke Mi, Will You Be My Valentine? 💕</h1>
+
+<button id="yesBtn" onclick="yesClicked()">YES 💖</button>
+<button id="noBtn" onmouseover="moveButton()">NO 😏</button>
+
+<p id="message"></p>
+
+<!-- Music -->
+<audio id="bgMusic" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Pictures -->
+<div id="photos">
+    <img id="slide" src="pic1.jpg">
+</div>
+
+<script>
+
+/* Sweet typewriter message */
+let text = "You just made my world brighter ❤️ I promise to love, laugh and grow with you, I love you so much Aduke Mi 💕";
+let index = 0;
+
+function typeWriter(){
+    if(index < text.length){
+        document.getElementById("message").innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter,50);
+    }
+}
+
+/* YES button */
+function yesClicked(){
+
+    document.getElementById("bgMusic").play();
+    document.getElementById("photos").style.display = "block";
+
+    typeWriter();
+    startSlideshow();
+    createHearts();
+}
+
+/* Escaping NO button */
+function moveButton(){
+    let button = document.getElementById("noBtn");
+
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+
+    button.style.position="absolute";
+    button.style.left = x + "px";
+    button.style.top = y + "px";
+}
+
+/* Slideshow */
+let images = [
+    "pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg","pic5.jpg",
+    "pic6.jpg","pic7.jpg","pic8.jpg","pic9.jpg","pic10.jpg"
+];
+let slideIndex = 0;
+
+function startSlideshow(){
+    setInterval(()=>{
+        slideIndex++;
+        if(slideIndex >= images.length){
+            slideIndex = 0;
+        }
+        document.getElementById("slide").src = images[slideIndex];
+    },3000);
+}
+
+/* Floating hearts */
+function createHearts(){
+    setInterval(()=>{
+        let heart = document.createElement("div");
+        heart.innerHTML="❤️";
+        heart.classList.add("heart");
+
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = "600px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },5000);
+
+    },300);
+}
+
+</script>
+
+</body>
+</html>
